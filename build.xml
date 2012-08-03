@@ -1,0 +1,44 @@
+<project name="Audiolizer" default="run" basedir=".">
+  <description>
+    Cute little ant file to build the Audiolizer applet using the JSyn natural Java library
+  </description>
+
+  <property name="src" location="src"/>
+  <property name="lib" value="lib"/>
+  <property name="main-class"  value="com.mattfeury.audiolizer.Audiolizer"/>
+
+  <property name="build.dir" location="target"/>
+  <property name="classes.dir" value="${build.dir}/classes"/>
+  <property name="jar.dir"     value="${build.dir}/jar"/>
+
+  <path id="classpath">
+    <fileset dir="${lib}" includes="*.jar"/>
+  </path>
+
+  <target name="init" depends="clean">
+    <tstamp/>
+    <mkdir dir="${classes.dir}"/>
+  </target>
+
+  <target name="compile" depends="init" description="compile the source " >
+    <javac srcdir="${src}" destdir="${classes.dir}" classpathref="classpath"/>
+  </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="${jar.dir}"/>
+    <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+      <manifest>
+        <attribute name="Main-Class" value="${main-class}"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="run" depends="jar">
+    <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+  </target>
+
+  <target name="clean" description="clean up" >
+    <delete dir="${build.dir}"/>
+  </target>
+</project>
+

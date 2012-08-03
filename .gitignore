@@ -1,0 +1,11 @@
+*.ser
+*.class
+*.bak
+*.off
+*.old
+.DS_Store
+*.swo
+*.swp
+*.swn
+
+target
